@@ -660,10 +660,10 @@ public class JComponentDisplay extends JComponent
 										
 									if (m == 1)
 									{
-										//if (k == 0)
-										//	graphics2d.setColor( Color.PINK );
-										//else
-											graphics2d.setColor( Color.PINK );
+										if (k == 0)
+											graphics2d.setColor( Color.BLACK );
+										else
+											graphics2d.setColor( Color.MAGENTA );
 									}
 								}
 							}

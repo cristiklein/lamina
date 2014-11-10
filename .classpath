@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="sources"/>
+	<classpathentry excluding="sources/" kind="src" path=""/>
+	<classpathentry kind="lib" path="jhall.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/usr/share/java/jai_core.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/jai_codec.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

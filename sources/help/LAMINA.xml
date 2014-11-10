@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<toc version="1.0">
+  <tocitem expand="true">LAMINA
+    <tocitem expand="false" text="Overview" target="LAMINA_Overview"/>
+    <tocitem expand="false" text="License" target="LAMINA_License"/>
+    <tocitem expand="false" text="Libraries" target="LAMINA_Libraries"/>
+    <tocitem expand="false" text="Citing" target="LAMINA_Citing"/>
+  </tocitem>
+</toc>

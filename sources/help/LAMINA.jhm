@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<map version="1.0">
+    <mapID target="Default" url="LAMINA_Overview.html" />
+    <mapID target="LAMINA_Overview" url="LAMINA_Overview.html" />
+    <mapID target="LAMINA_License" url="LAMINA_License.html" />
+    <mapID target="LAMINA_Libraries" url="LAMINA_Libraries.html" />
+    <mapID target="LAMINA_Citing" url="LAMINA_Citing.html" />
+    <mapID target="LAMINA_icon" url="img/laminaabout32x32.png" />
+
+</map>

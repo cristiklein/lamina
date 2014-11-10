@@ -1,0 +1,183 @@
+<HTML>
+	<HEAD>
+		<TITLE>LAMINA: Leaf shApe deterMINAtion</TITLE>
+		<META NAME="generator" content="TextPad 4.5">
+		<META name="Author" content="Nathaniel Street" />
+		<META http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+	</HEAD>
+	<BODY>
+
+		<H1>Introduction to LAMINA: Leaf shApe deterMINAtion</H1>
+		<P>
+			LAMINA is a software tool for the automated or semi-automated determination of leaf area and shape as well as serration dimensions and any 'missing' leaf area, such as that caused by herbivory.<BR /><BR />
+
+			LAMINA was developed to enable the rapid analysis of large collections of leaves where the user is interested in the shape, size and serration pattern of leaves. The software was originally developed for the analysis of European aspen leaves, which contain large to medium serrations. However, it has been tested on leaves with smaller serrations (teeth). For smaller serrations, users must ensure adequate image resolution.<BR /><BR />
+
+			There are two versions of LAMINA. The first is intended for the analysis of single files or for a number of files in a semi-automated fashion where user-modification of parameters may be required. The second is a batch-mode version requiring no user intervention.<BR /><BR />
+
+	</P>
+	<H1>Image prerequisites</H1>
+	<P>
+			LAMINA was designed to work on images of scanned leaves on a white background. Images with a black background are currently not supported. Images for use are assumed to only contain the leaves to be measured. Other image contaminants may be falsely identified as leaves as no assumptions are made regarding the shape of the identified objects. Hence, care should be taken during the image aquisition stage of the process (always remember: garbage in, garbage out!).<BR /><BR />
+
+			All images for use should be scanned at the same resolution. You will also need a calibration image containing a solid coloured rectangle of known dimensions in order to convert the relative leaf areas in the image to a quantifiable metric (e.g. millimeters). In the software testing, we have used Post-it notes because they are always available and are of a consistent size. The only other requirement for this calibration image is that the scanned object must not be black.<BR /><BR />
+		</P>
+		<H1>Installation</H1>
+		<P>
+			LAMINA is written in JAVA and the source code (released under <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GNU GPL Version 2</a>) is included with the installation/download. These instructions deal with installation on Windows-based machines but the principle is the same on any platform.<BR /><BR />
+
+			BEFORE installing LAMINA you should ensure that you have JAVA version 1.4.x or later installed. Go <a href="http://www.java.com/getjava/">here</a> to download and install the latest version or <a href="http://www.java.com/en/download/installed.jsp?detect=jre&try=1">here</a> to find out if you have the most up-to-date version of JAVA installed. LAMINA uses the <a href="http://java.sun.com/javase/technologies/desktop/media/jai/">Java Advanced Imaging (JAI) package</a> to support common image file formats, which is bundled with the installation and hence no additional installation should be required.
+
+			Once you are sure you have a valid JAVA installation (the path of which must be included as a system path), run the LAMINA installer, which will install a Start menu entry with links to run the batch and standard LAMINA versions.<BR /><BR />
+
+			The memory requirements of LAMINA will be determined by the resolution of the images to be analyzed. For a 300 dpi scan, we recommend at least 512Mb of RAM to be able to handle the large image sizes, but more sensibly you will need 1GB RAM.<BR /><BR />
+		</P>
+
+		<H1>LAMINA Settings</H1>
+		<P>
+
+			Click on the Settings button at the top of the LAMINA window to view the range of options that can be set.<BR /><BR />
+			<ul>
+			<li>
+			<b>Thresholding</b>. This first settings tab determines the method used by LAMINA to identify objects for measurement from within the current image. The greedy search is set by default and should work for the majority of images to approximate a suitable threshold between background and leaf areas. However, if this option fails to identify your image objects or does not seem to be optimal, first try 'Use exhaustive search' (which is slower) or try setting a manual threshold value and run the analysis until an optimal value is found (we show an example image in the Artemisia tutorial where this is required).<BR /><BR />
+
+			<li>
+			<b>Object sizes</b>. This tab contains two settings to control the minimum size of objects detected for analysis and the minimum object density. The first setting is used to remove very small objects that are potential artifacts in the image. The second setting is used to exclude image artefacts such as long, thin lines around the border of the image that can often occur during scanning. The default values should work for most leaves but may need adjusting if you have particularly small leaves.<BR /><BR />
+
+			<li>
+			<b>Misc.</b> This tab contains a number of options specifying how dimensions are determined and whether to find and measure leaf serrations.<BR /><BR />
+
+			The first option determines whether length and width measurements should initially be set to be perpendicular to the image. In most cases where leaves have been placed square on the scanner this setting should be optimal. However, some leaves are of complex shapes and so it may be optimal to remove this tick (see the Artemisia example).<BR /><BR />
+
+			The second setting determines whether length and width should be forced to be perpendicular to each other. In most cases, you will want to select this option.<BR /><BR />
+
+			The last option determines whether to detect serrations on the leaf margin. If this option is selected, you should set the 'Serration detection pixel threshold' in the box below. Determining the optimal value for serration thresholding requires some trial and error to find a setting that works for your leaves. In general, small serrations require smaller values.<BR /><BR />
+
+			Finally, there is an option to record the location of a set of equally-spaced 'boundary coordinates' around the leaf margin (stored as x and y coordinates in relation to the object center). These are useful for PCA analysis of large collections of leaves. The default setting of 50 should be adequate for the analysis of the majority of leaves.<BR /><BR />
+
+			<li>
+			<b>Directories</b>. For semi-automated or single-image analysis, the final Settings tab contains two options to set the default directory for input of images and for output of any results files generated.<BR /><BR />
+
+			All settings are stored and remembered between sessions. This includes the calibration scale.<BR /><BR />
+
+			</ul>
+		</P>
+
+		<H1>Single file and semi-automated image analysis</H1>
+		<H2>Calibration</H2>
+		<P>
+			Before starting an analysis session, you should first calibrate the scale using a calibration image that was scanned at the same resolution as your experimental images. This calibration image should contain a rectangle of known dimensions and it should be a colour other than black.<BR /><BR />
+
+			<IMG SRC="images/screenshot1.jpg" ALIGN=absmiddle BORDER=1 ALT="LAMINA screenshot" /><BR /><BR />
+
+			Click on the 'Calibration' button at the top right of the LAMINA window and enter the known length and width of your calibration object. Then click on the 'Browse calibration image...' button to locate your calibration image. Lastly click on 'Run' and the image will be loaded, thresholded and the calibration object cropped from the image for dimension determination. The calibration units will be returned. Click on 'OK' to continue.<BR /><BR />
+
+			Before opening and analyzing any images, click on the Settings button and set the default folders for you images and results to ensure that you can easily find the results file(s) generated.<BR /><BR />
+
+	<H2>Leaf shape determination</H2>
+
+			Next you should load your first experimental image using either the 'Open single image' button or the 'Open image folder' button depending on whether you will measure one or more images. If measuring more than one image, browse and locate the image folder and click on 'Select image folder' to continue.<BR /><BR />
+
+			The first image will then be automatically loaded, thresholded and any image objects cropped and measured.<BR /><BR />
+
+			<IMG SRC="images/screenshot2.jpg" ALIGN=absmiddle BORDER=1 ALT="LAMINA screenshot after leaf analysis" /><BR /><BR />
+
+			After LAMINA has analyzed the image, it will display an image containing the cropped image objects with the determined dimension lines marked. The center (maximum) length and width are shown as red lines and sub-division of these are shown as blue lines. If serration detection was selected, serrations will be drawn in blue, with a yellow line marking the maximum depth of each serration. Any missing leaf area (holes in the leaf) will be marked in green.<BR /><BR />
+
+			The user can now correct any leaves where the center lines (in red) are not aligned to the center of the leaf. To correct the alignment, click once at the bottom center point and again at the top center point (click and release at each point, do not try to 'drag' a line from the bottom to the top). All other measurement lines will then be updated (if force orthogonal lines is selected, all adjusted lines will be orthogonal to the line drawn).<BR /><BR />
+
+			<IMG SRC="images/screenshot3.jpg" ALIGN=absmiddle BORDER=1 ALT="Correcting centre line alignment" /><BR /><BR />
+
+			If the settings are not optimal, click on the Settings button, make adjustments and then click 'Re-analyze'.<BR /><BR />
+
+			Once you are happy with the results for each leaf, click on 'Save' (for single images) or 'Save and next' (for multiple images). The results are stored in a tab-text file in the folder specified in the 'Directories' tab of the Settings.<BR /><BR />
+
+			Always remember to click on Save and next, even if you are analysing the last image in a folder.<BR /><BR />
+
+			In addition to the tab-text results file, a cropped version of each image is generated and saved in the specified results folder.<BR /><BR />
+			<H2>Output</H2>
+
+			The generated Results file is automatically created in the output directory (see the section on 'Directories' above) and named after the time of the creation. It contains the following values:<BR /><BR />
+
+			<B>File</B> - The file name<BR />
+			<B>Obj. id</B> - The object number within the image file (one row per object)<BR />
+			<B>Inv. scale parameter</B> - The calibration scale used<BR />
+			<B>Obj. center horiz.</B>- the x location of the center of the object<BR />
+			<B>Obj. center vert.</B> - the y location of the center of the object<BR />
+			<B>Num. cavities</B> - The number of cavities (holes) found in the object<BR />
+			<B>Area 1</B> - The object area minus any cavities<BR />
+			<B>Area 2 (cavities filled)</B> - The object area with the cavities filled in<BR />
+			<B>Perimeter 1</B> - The object perimeter including the perimeter of any cavities<BR />
+			<B>Perimeter 2 (excl. cavities)</B> - The object perimeter with cavities filled in<BR />
+			<B>Squared Perimeter 1/Area 1</B> - A measure of the circularity of the object (for a perfect circle, this fraction becomes pi*4)<BR />
+			<B>Squared Perimeter 2/Area 2</B> - As above but with any cavities filled in<BR />
+			<B>Circularity</B> - the percentage of pixels overlapping between the actual object and a 'perfect' circle with the same width/height as the object<BR />
+			<B>Horiz. size center</B> - The proximo-distal lamina length of the center line<BR />
+			<B>Horiz. size 25%</B> - The proximo-distal lamina length at 25% of the centro-lateral axis center length<BR />
+			<B>Horiz. size 50%</B> - The proximo-distal lamina length at 50% of the centro-lateral axis center length<BR />
+			<B>Horiz. size 75%</B> - The proximo-distal lamina length at 75% of the centro-lateral axis center length<BR />
+			<B>Vert. size center</B> - The centro-lateral lamina length of the center line<BR />
+			<B>Vert. size 25%</B> - The centro-lateral lamina length at 25% of the proximo-distal axis center line<BR />
+			<B>Vert. size 50%</B> - The centro-lateral lamina length at 50% of the proximo-distal axis center line<BR />
+			<B>Vert. size 75%</B> - The centro-lateral lamina length at 75% of the proximo-distal axis center line<BR />
+			<B>Vert. size center / Horiz. size center</B> - The length:width ratio<BR />
+			<B>Horiz. size 25% / Horiz. size 75%</B> - Used to indicate how symmetrical the leaf is (perfect symmetry would be a value of 1)<BR />
+			<B>Vert. size 25% / Vert. size 75%</B> - Used to indicate how symmetrical the leaf is (perfect symmetry would be a value of 1)<BR />
+			<B>Num. Indents</B> - The number of identified leaf serrations<BR />
+			<B>Indent width mean</B> - The mean serration width<BR />
+			<B>Indent width median</B> - The median serration width<BR />
+			<B>Indent width SD</B> - The standard deviation of serration width<BR />
+			<B>Indent depth mean</B> - The mean serration depth<BR />
+			<B>Indent depth median</B> - The median serration depth<BR />
+			<B>Indent depth SD</B> - The standard deviation of serration depth<BR />
+			<B>Boundary coord. #01 X</B> - The x coordinate of the 1st boundary coordinate<BR />
+			<B>Boundary coord. #01 Y</B> - The y coordinate of the 1st boundary coordinate<BR />
+			<B>.</B><BR />
+			<B>.</B><BR />
+			<B>.</B><BR />
+			<B>Boundary coord. #n X</B> - The x coordinate of the nth boundary coordinate<BR />
+			<B>Boundary coord. #n Y</B> - The y coordinate of the nth boundary coordinate<BR /><BR />
+		</P>
+
+		<H1>Batch analysis</H1>
+		<P>
+			The workflow for batch analysis is largely the same as for the semi-automated analysis. The user should first set the Settings required and then load and analyze a Calibration image.<BR /><BR />
+
+			The Batch analysis version of LAMINA contains an extra settings tab to specify whether cropped and segmented images should be saved and whether to open a log per image and to save a results file per image (otherwise only a single file containing all results is generated).<BR /><BR />
+
+			To select the images to be analyzed, click on the 'Open images' button and navigate to your image folder. To select multiple images, click on the first image while holding down the Shift key and then click on the final image. A more detailed selection can be made by holding down the Ctrl key and pressing inidividual images. A list of images will then be generated and any unwanted images can be removed by highlighting them and then clicking on 'Remove from list'.<BR /><BR />
+
+			When you have loaded a list of all images to be analyzed (these can be spread across multiple locations), click the 'Start processing' button. All output, e.g. results files and images from the segmention, will be placed in the output directory specified in the 'Settings' dialog.<BR /><BR />
+
+			A progress bar will display information regarding the analysis process. In the event of errors, a log window will appear with information regarding the problem shown in red. The analysis procedure will continue to run for any remaining image files even if one particular image fails.<BR /><BR />
+		</P>
+
+		<H1>Artemisia leaves: An example of a non-standard leaf</H1>
+		<P>
+			While testing images of leaves from various species, Artemisia proved to deviate from the standard image work flow the most significantly and we therefore include a brief description of how we performed an analysis of these leaves.<BR /><BR />
+
+			Locate the example Artemisia image included with LAMINA by clicking on 'Open single image' (typically the location will be 'C:\Program Files\LAMINA\artemisia.jpg').<BR /><BR />
+
+			If you first try analysing the image using 'standard' settings (Greedy search thresholding, use vert/horiz lines, force orthogonal, find serrations) you will see that the leaf margin is not accurately detected, that the center lines are not appropriate and that (obviously) detecting leaf serrations is innapropriate (see the left hand side of the image below).<BR /><BR />
+
+			<IMG SRC="images/screenshot4.jpg" ALIGN=absmiddle BORDER=1 ALT="Using manual Thresholding to extract Artemiaia leaves" /><BR /><BR />
+
+			To accurately analyze this image, you should set a manual threshold value of 110 and remove the ticks from the use vert/horiz lines, force orthogonal, and find serrations settings.<BR /><BR />
+
+			The optimal manual threshold value needs to balance finding the actual leaf margin and not the shadow around the leaf against not identifying all sections of the leaf. Try using a settings of 80 and increase this in steps of 10 until you reach 130 to see the effect that this setting has on the area identified as being leaf.<BR /><BR />
+
+			You will have noticed that the border pixel detection now takes considerably longer, as one would expect for such a complex path of leaf margin border pixels.<BR /><BR />
+
+			The returned result now accurately traces the leaf margin (right hand side of the above figure). The cropped image looks odd because some regions are falsely identified as cavities, but this can safely be ignored as the area minus cavity measurement can be used.<BR /><BR />
+
+			It is also clear that the identified horizontal and vertical center lines are not correct, so these should be corrected manually for each leaf by clicking first at the base and then the tip of each leaf to set the center line manually.<BR /><BR />
+
+
+			<IMG SRC="images/screenshot5.jpg" ALIGN=absmiddle BORDER=1 ALT="Correcting centre line alignment" /><BR /><BR />
+
+			As can be seen in the above cropped image of the third image object, the results are now something useful, although the curvature of the central leaf blade cannot be accounted for. However, the absolute maximum leaf length and width are now identified as is the total leaf area.<BR /><BR />
+
+			This Artemisia image was kindly supplied by Dr Anne Rae, working on the <a href="http://www.york.ac.uk/org/cnap/artemisiaproject/index.htm">CNAP Artemisia Research Project</a>, funded by the <a href="http://www.gatesfoundation.org">Bill and Melinda Gates Foundation</a>.<BR />
+		</P>
+	</BODY>
+</HTML>

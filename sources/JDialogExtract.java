@@ -1,6 +1,6 @@
 /* JDialogExtract.java
  *
- * Copyright (c) Max Bylesjö, 2004-2008
+ * Copyright (c) Max BylesjÃ¶, 2004-2008
  *
  * A general GUI to visualize two parallel progresses:
  * 'current' and 'interim'.

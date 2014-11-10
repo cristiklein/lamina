@@ -1,6 +1,6 @@
 /* JFrameLog.java
  *
- * Copyright (c) Max Bylesjö, 2004-2008
+ * Copyright (c) Max BylesjÃ¶, 2004-2008
  *
  * A GUI to visualize an event- and error log, with functionality
  * to save the log session.

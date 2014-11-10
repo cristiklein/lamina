@@ -1,6 +1,6 @@
 /* FileFilterImage.java
  *
- * Copyright (c) Max Bylesjö, 2007-2008
+ * Copyright (c) Max BylesjÃ¶, 2007-2008
  *
  * A class that holds a filename filter for common image file
  * extensions, e.g. jpeg, tif, bmp and gif.

@@ -1,6 +1,6 @@
 /* ApplicationSettings.java
  *
- * Copyright (c) Max Bylesjö, 2007-2008
+ * Copyright (c) Max BylesjÃ¶, 2007-2008
  *
  * An object that contains various settings and read/write
  * functions to store into INI files.

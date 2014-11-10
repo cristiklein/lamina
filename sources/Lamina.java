@@ -1,6 +1,6 @@
 /* Lamina.java
  *
- * Copyright (c) Max Bylesjö, 2007-2008
+ * Copyright (c) Max BylesjÃ¶, 2007-2008
  *
  * A class that implements a GUI for running
  * the leaf-extracting process.
@@ -2981,7 +2981,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 							
 							
 							
-							//int[][] contourComplete = § int[1][1];  //just to obey the java compiler
+							//int[][] contourComplete = Â§ int[1][1];  //just to obey the java compiler
 							if (!frame.getCancelled())
 							{
 								//GrayscaleImageEdit.findMinimalContour(vecSegObjBorders, connectMats, distMats, 0, -1, imgDisplay.getGraphics() );

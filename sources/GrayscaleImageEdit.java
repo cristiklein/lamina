@@ -1,6 +1,6 @@
 /* GrayscaleImageEdit.java
  *
- * Copyright (c) Max Bylesjö, 2007-2008
+ * Copyright (c) Max BylesjÃ¶, 2007-2008
  *
  * A class with functions to perform basic grayscale image editing
  * procedures.

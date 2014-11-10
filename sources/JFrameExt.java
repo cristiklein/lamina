@@ -1,6 +1,6 @@
 /* JFrameExt.java
  *
- * Copyright (c) Max Bylesjö, 2004-2008
+ * Copyright (c) Max BylesjÃ¶, 2004-2008
  *
  * An extension of the JFrame class, containing options to
  * set flags for starting/stopping the frame from running.

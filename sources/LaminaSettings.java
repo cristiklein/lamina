@@ -1,6 +1,6 @@
 /* LaminaSettings.java
  *
- * Copyright (c) Max Bylesjö, 2007-2008
+ * Copyright (c) Max BylesjÃ¶, 2007-2008
  *
  * A class that implements a GUI for a 'settings window',
  * that allows the users to change settings certain parameters.

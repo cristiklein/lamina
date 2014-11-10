@@ -1,6 +1,6 @@
 /* JFrameLog.java
  *
- * Copyright (c) Max Bylesjö, 2004-2008
+ * Copyright (c) Max BylesjÃ¶, 2004-2008
  *
  * A GUI to visualize an event- and error log, with functionality
  * to save the log session.
@@ -165,12 +165,12 @@ public class JDialogAbout extends JDialog implements ActionListener, WindowListe
 
 		//----- ABOUT ------
 		addLine(tpAbout, APPL_NAME, sasBold);
-		addLine(tpAbout, "Copyright (C) 2007-2008 Max Bylesjö", sasBold);
+		addLine(tpAbout, "Copyright (C) 2007-2008 Max BylesjÃ¶", sasBold);
 		addLine(tpAbout, "Version " + APPL_VERSION + ", release date: " + APPL_DATE, sasBold);
 		//newLine();
 
 		newLine(tpAbout);
-		addLine(tpAbout, "Coded by Max Bylesjö <max.bylesjo@chem.umu.se>", sasDef);
+		addLine(tpAbout, "Coded by Max BylesjÃ¶ <max.bylesjo@chem.umu.se>", sasDef);
 		newLine(tpAbout);
 		addString(tpAbout, "LAMINA ", sasBold);
 		addLine(tpAbout, "(Leaf shApe deterMINAtion) is a tool for the automated analysis of "+
@@ -189,7 +189,7 @@ public class JDialogAbout extends JDialog implements ActionListener, WindowListe
 		/*
 		addLine(tpCiting, "When using this software in publications, please cite: ", sasDef);
 		newLine(tpCiting);
-		addString(tpCiting, "Bylesjö M, Eriksson D, Sjödin A, Sjöström M, Jansson S, Antti H and Trygg J. ", sasDef);
+		addString(tpCiting, "BylesjÃ¶ M, Eriksson D, SjÃ¶din A, SjÃ¶strÃ¶m M, Jansson S, Antti H and Trygg J. ", sasDef);
 		addString(tpCiting, "MASQOT: a method for cDNA microarray spot quality control. ", sasBold);
 		addString(tpCiting, "BMC Bioinformatics ", sasItalic);
 		addLine(tpCiting, "2005, 6:250.", sasDef);
@@ -198,7 +198,7 @@ public class JDialogAbout extends JDialog implements ActionListener, WindowListe
 		newLine(tpCiting);
 		addLine(tpCiting, "and/or", sasDef);
 		newLine(tpCiting);
-		addString(tpCiting, "Bylesjö M, Sjödin A, Eriksson D, Antti H, Moritz T, Jansson S and Trygg J. ", sasDef);
+		addString(tpCiting, "BylesjÃ¶ M, SjÃ¶din A, Eriksson D, Antti H, Moritz T, Jansson S and Trygg J. ", sasDef);
 		addString(tpCiting, "MASQOT-GUI: spot quality assessment for the two-channel microarray platform. ", sasBold);
 		addString(tpCiting, "Bioinformatics ", sasItalic);
 		addLine(tpCiting, "2006, 22(20):2554-5.", sasDef);

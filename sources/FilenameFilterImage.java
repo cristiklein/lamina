@@ -1,6 +1,6 @@
 /* FilenameFilterImage
  *
- * Copyright (c) Max Bylesjö, 2004-2008
+ * Copyright (c) Max BylesjÃ¶, 2004-2008
  *
  * A class that holds a filename filter for image files
  *

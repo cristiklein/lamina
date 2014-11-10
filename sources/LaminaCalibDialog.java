@@ -1,6 +1,6 @@
 /* LaminaCalibDialog.java
  *
- * Copyright (c) Max Bylesjö, 2007-2008
+ * Copyright (c) Max BylesjÃ¶, 2007-2008
  *
  * A class that implements a GUI for displaying the initial
  * steps of a calibration procedure.

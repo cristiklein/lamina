@@ -1,6 +1,6 @@
 /* JComponentDisplay.java
  *
- * Copyright (c) Max Bylesjö, 2004-2008
+ * Copyright (c) Max BylesjÃ¶, 2004-2008
  *
  * A class to display scaled images with optional line-based objects,
  * which are drawn on top of the Graphics object.

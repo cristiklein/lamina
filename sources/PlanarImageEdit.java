@@ -1,6 +1,6 @@
 /* PlanarImageEdit.java
  *
- * Copyright (c) Max Bylesjö, 2004-2008
+ * Copyright (c) Max BylesjÃ¶, 2004-2008
  *
  * A class with functions to perform basic image editing
  * procedures for the PlanarImage class.

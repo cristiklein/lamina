@@ -6,5 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/usr/share/java/jai_core.jar"/>
 	<classpathentry kind="lib" path="/usr/share/java/jai_codec.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/mlibwrapper_jai.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

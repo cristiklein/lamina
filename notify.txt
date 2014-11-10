@@ -1,0 +1,2 @@
+Make sure that you have Java Advanced Imaging (JAI) installed 
+and present in the Java path before starting the installation!

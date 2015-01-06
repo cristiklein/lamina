@@ -665,6 +665,14 @@ public class JComponentDisplay extends JComponent
 										else
 											graphics2d.setColor( Color.MAGENTA );
 									}
+									if (m == 2)
+									{
+										if (k == 0)
+											graphics2d.setColor( Color.ORANGE );
+										else
+											graphics2d.setColor( Color.WHITE );
+									}
+
 								}
 							}
 							

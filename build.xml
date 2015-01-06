@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_run_jar" name="Create Runnable Jar for Project Lamina with Jar-in-Jar Loader">
+<project default="create_run_jar" name="Create Runnable Jar for Project Lamina">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
     <target name="create_run_jar">
-        <jar destfile="/home/cklein/workspace/Lamina.jar">
+        <jar destfile="/home/cklein/hobby/2014-lamina/Lamina.jar" filesetmanifest="mergewithoutmain">
             <manifest>
-                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
-                <attribute name="Rsrc-Main-Class" value="Lamina"/>
+                <attribute name="Main-Class" value="Lamina"/>
                 <attribute name="Class-Path" value="."/>
-                <attribute name="Rsrc-Class-Path" value="./ jhall.jar jai_core.jar jai_codec.jar mlibwrapper_jai.jar"/>
             </manifest>
-            <zipfileset src="jar-in-jar-loader.zip"/>
             <fileset dir="/home/cklein/hobby/2014-lamina/bin"/>
-            <zipfileset dir="/home/cklein/hobby/2014-lamina" includes="jhall.jar"/>
-            <zipfileset dir="/usr/share/java" includes="jai_core.jar"/>
-            <zipfileset dir="/usr/share/java" includes="jai_codec.jar"/>
-            <zipfileset dir="/usr/share/java" includes="mlibwrapper_jai.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/cklein/hobby/2014-lamina/jhall.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/usr/share/java/jai_core.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/usr/share/java/jai_codec.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/usr/share/java/mlibwrapper_jai.jar"/>
         </jar>
     </target>
 </project>

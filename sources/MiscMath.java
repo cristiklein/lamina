@@ -617,38 +617,11 @@ public class MiscMath
 	{
 		Point2D.Double pRet = new Point2D.Double();
 		
-		int lineDeltaX = (int)Math.abs(line[1].getX() - line[0].getX());
-		int lineDeltaY = (int)Math.abs(line[1].getY() - line[0].getY());
-		int origX = (int)Math.min(line[0].getX(), line[1].getX());
-		int origY = (int)Math.min(line[0].getY(), line[1].getY());
+		int lineDeltaX = (int)(line[1].getX() - line[0].getX());
+		int lineDeltaY = (int)(line[1].getY() - line[0].getY());
+		int origX = (int)line[0].getX();
+		int origY = (int)line[0].getY();
 		
-		//double slope = (double)lineDeltaY/(double)lineDeltaX;
-		//boolean slopeMissing = (slope == Double.POSITIVE_INFINITY || slope == Double.NEGATIVE_INFINITY || Double.isNaN(slope));
-		
-		//double intercept = 0.0:
-		if (lineDeltaX == 0)
-		{
-			//we have no slope, hence we only adjust Y
-			pRet = new Point2D.Double( origX, origY + relDist*lineDeltaY );
-		
-		} else if (lineDeltaY == 0)
-		{
-			//slope is zero, hence we only adjust X
-			pRet = new Point2D.Double( origX + relDist*lineDeltaX, origY );
-		} else
-		{
-			//we have to use simple trigonometry to find the correct position
-			//first define the distance from A to B that will be used
-			// this is the length of the hypotenuse
-			double dist = relDist*line[0].distance(line[1]); //hypotenuse
-			double angle = Math.atan( (double)lineDeltaY / (double)lineDeltaX ); //angle
-			double yCoord = dist*Math.sin(angle); //opposite
-			double xCoord = dist*Math.cos(angle); //adjacent
-			
-			pRet = new Point2D.Double( origX + xCoord, origY + yCoord );
-			
-		} 
-	
-		return pRet;
+		return pRet = new Point2D.Double(origX + lineDeltaX * relDist,  origY + lineDeltaY * relDist);
 	}
 }

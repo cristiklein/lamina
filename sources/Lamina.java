@@ -4298,6 +4298,12 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 						for (int k = 0; k < adjustments.length; k++) {
 							Point2D.Double pointIntersect = MiscMath.findPointOnLine(longestWidthLine, adjustments[k]);
 							Point[] adjustmentLine = GrayscaleImageEdit.findPerpendicularLineFast(imgSegCropped, (objIndex+1), pointIntersect, longestWidthLine);
+							/* swap points of adjustment line, for the sake of maintaining consistency:
+							 * point 0 is towards the base, point 1 towards the tip */
+							Point tmp = adjustmentLine[0];
+							adjustmentLine[0] = adjustmentLine[1]; 
+							adjustmentLine[1] = tmp;
+							/* done */
 							vecCurrPriLines.set(k+1, adjustmentLine);
 						}
 												

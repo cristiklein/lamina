@@ -31,14 +31,12 @@
 
 import java.io.*;
 import java.util.*;
-import java.util.EventListener;
 import java.beans.*;
 import java.lang.Math.*;
 import java.net.URL;
 import java.text.*;
 import java.awt.geom.*;
 import java.awt.*;
-import java.awt.Rectangle;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.awt.image.renderable.ParameterBlock;
@@ -140,7 +138,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 	// for segmentation
 	private static Vector vecSegObjs, vecSegObjsOrg, vecSegObjCenters, vecSegObjCentersOrg, vecSegObjNoCavities, vecSegObjBorders, vecSegObjBordersShort,
 		vecSegObjBordersShortLandmarks, vecSegObjBorderBP, vecSegObjBorderBPInner,
-		vecHorizVertLines, vecIntersectPoints, vecContours, vecContourComplete, vecContourUnique,
+		vecPriSecLines, vecIntersectPoints, vecContours, vecContourComplete, vecContourUnique,
 		vecContourBorder, vecContourHotspotConnections, vecContourHotspotIndices, vecContourIndents;
 	private static int[][] imgMatGrayscaleOrg, imgMatGrayscaleTemplateOrg, imgMatGrayscale, imgMatGrayscaleTemplate,
 		imgSeg, imgSegCropped, contourUnique, contourComplete; //imgSegNoCavities, 
@@ -984,7 +982,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 				try
 				{
 					objStats = GrayscaleImageEdit.calcSegStats(vecSegObjs, vecSegObjNoCavities, vecSegObjBorders, vecSegObjBordersShort,
-						vecSegObjBorderBPInner, vecHorizVertLines, vecIntersectPoints,
+						vecSegObjBorderBPInner, vecPriSecLines, vecIntersectPoints,
 						vecContourHotspotConnections, vecContourHotspotIndices, vecContourIndents,
 						1/( (SpinnerNumberModel)spinnerScaleParam.getModel()).getNumber().doubleValue(),
 						vecSegObjBordersShortLandmarks, vecSegObjCentersOrg, vecSegObjCenters,
@@ -1155,7 +1153,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 						BufferedImage imgCroppedCopy = new BufferedImage(imgCropped.getWidth(), imgCropped.getHeight(), imgCropped.getType() );
 						imgCroppedCopy.setData( imgCropped.getData() );
 						imgCroppedCopy = PlanarImageEdit.applyMask(imgCroppedCopy, imgMatBinary);
-						GrayscaleImageEdit.paintSegmentationResults(vecSegObjs, vecSegObjNoCavities, vecSegObjCenters, vecSegObjBorders, vecSegObjBorderBPInner, vecHorizVertLines, vecIntersectPoints, imgCroppedCopy.getGraphics());
+						GrayscaleImageEdit.paintSegmentationResults(vecSegObjs, vecSegObjNoCavities, vecSegObjCenters, vecSegObjBorders, vecSegObjBorderBPInner, vecPriSecLines, vecIntersectPoints, imgCroppedCopy.getGraphics());
 						//GrayscaleImageEdit.paintBordersAndCavities(vecSegObjs, vecSegObjNoCavities, vecSegObjBorders, vecSegObjBorderBPInner, imgCroppedCopy.getGraphics());
 						
 						if (contourUnique != null && vecContourHotspotConnections != null && vecContourIndents != null)
@@ -2905,7 +2903,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 						Vector[] vecHorizVertLinesObj = GrayscaleImageEdit.fetchHorizVertLines(imgSegCropped, vecSegObjs, vecSegObjBordersShort,
 							settings.getForceOrtho(),  settings.getForceHorizVert());
 							
-						vecHorizVertLines = vecHorizVertLinesObj[0];
+						vecPriSecLines = vecHorizVertLinesObj[0];
 						vecIntersectPoints = vecHorizVertLinesObj[1];
 						
 						
@@ -2913,7 +2911,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 						
 						//GrayscaleImageEdit.paintSegmentationResults(vecSegObjs, vecSegObjNoCavities, vecSegObjBorders, vecSegObjBorderBPInner, vecHorizVertLines, vecIntersectPoints, imgDisplay.getGraphics());
 						
-						componentImageCropped.setVectorOfLines(vecHorizVertLines);
+						componentImageCropped.setVectorOfLines(vecPriSecLines);
 						componentImageCropped.setBorderLandmarks(vecSegObjBordersShortLandmarks);
 						componentImageCropped.set(imgDisplay);
 						componentImageCropped.repaint();
@@ -3305,7 +3303,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 						BufferedImage imgCroppedCopy = new BufferedImage(imgCropped.getWidth(), imgCropped.getHeight(), imgCropped.getType() );
 						imgCroppedCopy.setData( imgCropped.getData() );
 						imgCroppedCopy = PlanarImageEdit.applyMask(imgCroppedCopy, imgMatBinary);
-						GrayscaleImageEdit.paintSegmentationResults(vecSegObjs, vecSegObjNoCavities, vecSegObjCenters, vecSegObjBorders, vecSegObjBorderBPInner, vecHorizVertLines, vecIntersectPoints, imgCroppedCopy.getGraphics());
+						GrayscaleImageEdit.paintSegmentationResults(vecSegObjs, vecSegObjNoCavities, vecSegObjCenters, vecSegObjBorders, vecSegObjBorderBPInner, vecPriSecLines, vecIntersectPoints, imgCroppedCopy.getGraphics());
 						//GrayscaleImageEdit.paintBordersAndCavities(vecSegObjs, vecSegObjNoCavities, vecSegObjBorders, vecSegObjBorderBPInner, imgCroppedCopy.getGraphics());
 						
 						if (contourUnique != null && vecContourHotspotConnections != null && vecContourIndents != null)
@@ -3536,7 +3534,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 		} else if (e.getSource() == buttonCalcStats)
 		{
 			Vector objStats = GrayscaleImageEdit.calcSegStats(vecSegObjs, vecSegObjNoCavities, vecSegObjBorders, vecSegObjBordersShort,
-				vecSegObjBorderBPInner, vecHorizVertLines, vecIntersectPoints,
+				vecSegObjBorderBPInner, vecPriSecLines, vecIntersectPoints,
 				vecContourHotspotConnections, vecContourHotspotIndices, vecContourIndents,
 				1/( (SpinnerNumberModel)spinnerScaleParam.getModel()).getNumber().doubleValue(),
 				vecSegObjBordersShortLandmarks, vecSegObjCentersOrg, vecSegObjCenters,
@@ -3703,7 +3701,7 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 				//copy the original image and add some extra info
 				BufferedImage imgDisplayCopy = new BufferedImage(imgDisplay.getWidth(), imgDisplay.getHeight(), imgDisplay.getType() );
 				imgDisplayCopy.setData( imgDisplay.getData() );
-				GrayscaleImageEdit.paintSegmentationResults(vecSegObjs, vecSegObjNoCavities, vecSegObjCenters, vecSegObjBorders, vecSegObjBorderBPInner, vecHorizVertLines, vecIntersectPoints, imgDisplayCopy.getGraphics());
+				GrayscaleImageEdit.paintSegmentationResults(vecSegObjs, vecSegObjNoCavities, vecSegObjCenters, vecSegObjBorders, vecSegObjBorderBPInner, vecPriSecLines, vecIntersectPoints, imgDisplayCopy.getGraphics());
 				
 				imgCropped = PlanarImageEdit.cropImages(imgDisplayCopy, vec, 1.0);
 				componentImageCropped.set(imgCropped);
@@ -4246,200 +4244,64 @@ public class Lamina extends WindowAdapter implements ActionListener, PropertyCha
 					{
 						componentImageCropped.setBorderFixedPoint2(pMatch);
 						
+						/* Compute the line created by the user */
+						Point[] mainVeinLine = new Point[2];
+						mainVeinLine[0] = componentImageCropped.getBorderFixedPoint1(); /* base */
+						mainVeinLine[1] = componentImageCropped.getBorderFixedPoint2(); /* tip */
 						
-						Vector[] vecCurrHorizVertLines = (Vector[])vecHorizVertLines.get(objIndex);
-						Vector vecCurrVertLines = vecCurrHorizVertLines[0];
-						Vector vecCurrHorizLines = vecCurrHorizVertLines[1];
-						Point[] lineHorizCenter = (Point[])vecCurrHorizLines.get(0);
-						Point[] lineVertCenter = (Point[])vecCurrVertLines.get(0);
-						
-						
-						//System.err.println(line[0] + ", " + line[1]);
-						//System.err.println(lineHorizCenter[0] + ", " + lineHorizCenter[1]);
-						//System.err.println(lineVertCenter[0] + " , " + lineVertCenter[1]);
-						
-						
-						Point[] line = new Point[2];
-						line[0] = componentImageCropped.getBorderFixedPoint1();
-						line[1] = componentImageCropped.getBorderFixedPoint2();
-						
-						//Vector v2 = vecCurrHorizLines;
-						//for (int k = 0; k < vecCurrVertLines.size(); k++)
-						//	v2.add(vecCurrVertLines.get(k));
-						int absDistHoriz = (int)Math.abs(line[0].getX() - line[1].getX() );
-						int absDistVert = (int)Math.abs(line[0].getY() - line[1].getY() );
-						
-						
-						double lineAngle = 0.0;
-						Point[] linePerpCenter = new Point[1];
-						
-						lineAngle = MiscMath.pointAngle(line[0], line[1]);
-						System.err.println("Line has angle " + lineAngle);
-						
-						/*
-						//make sure that line[0].getX() < line[1].getX() and
-						// make sure that line[0].getY() < line[1].getY()
-						if (line[0].getX() > line[1].getX() )
-						{
-							Point pTemp = new Point(line[0]);
-							line[0] = new Point(line[1]);
-							line[1] = new Point(pTemp);
-							
-						} else if (line[0].getY() > line[1].getY() )
-						{
-							Point pTemp = new Point(line[0]);
-							line[0] = new Point(line[1]);
-							line[1] = new Point(pTemp);
-						}
-						*/
-						
-						//find the intersection point between the new line and the remaining line (horizontical or vertical)
-						boolean isHorizontal = true;
-						Point2D.Double pointIntersectCenter;
-						if (absDistHoriz > absDistVert)
-						{
-							//horizontal line
-							isHorizontal = true;
-							lineHorizCenter = line;
-							
-							//The user-defined line is horizontal... let's move the vertical line
-							//if (settings.getForceOrtho() )
-							{
-								pointIntersectCenter = MiscMath.lineIntersection(line, lineVertCenter);
-								if (!GrayscaleImageEdit.pointIsWithinObject(imgSegCropped, (objIndex+1), pointIntersectCenter) )
-								{
-									//move 
-									System.err.println("Intersection is outside object for point " + pointIntersectCenter);
-									pointIntersectCenter = MiscMath.findPointOnLine(lineHorizCenter, 0.5);
-									System.err.println("Moved to point " + pointIntersectCenter);
-								}
-								
-								lineVertCenter = GrayscaleImageEdit.findPerpendicularLineFast(imgSegCropped, (objIndex+1), pointIntersectCenter, line );
-							}
-						} else
-						{
-							//vertical line
-							isHorizontal = false;
-							lineVertCenter = line;
-						
-							//The user-defined line is vertical... let's move the horizontal line
-							//if (settings.getForceOrtho() )
-							{
-								pointIntersectCenter = MiscMath.lineIntersection(line, lineHorizCenter);
-								if (!GrayscaleImageEdit.pointIsWithinObject(imgSegCropped, (objIndex+1), pointIntersectCenter) )
-								{
-									//move 
-									System.err.println("Intersection is outside object for point " + pointIntersectCenter);
-									pointIntersectCenter = MiscMath.findPointOnLine(lineVertCenter, 0.5);
-									System.err.println("Moved to point " + pointIntersectCenter);
-								}
-								lineHorizCenter = GrayscaleImageEdit.findPerpendicularLineFast(imgSegCropped, (objIndex+1), pointIntersectCenter, line);
-							}
-						}
-						
-						System.err.println("Line goes from " + line[0] + " --> " + line[1]);
-						
-							
-						double[] adjustments = {0.25, 0.50, 0.75};
-						Point2D.Double pointIntersect;
-						for (int k = 0; k < adjustments.length; k++)
-						{
-							//find a new set of points, horizontal case
-							if (isHorizontal || settings.getForceOrtho() )
-							{
-								pointIntersect = MiscMath.findPointOnLine(lineVertCenter, adjustments[k]);
-								Point[] linePerpHoriz = GrayscaleImageEdit.findPerpendicularLineFast(imgSegCropped, (objIndex+1), pointIntersect, lineVertCenter);
-								vecCurrHorizLines.setElementAt(linePerpHoriz, k+1);
-							}
-							
-							
-							if (!isHorizontal || settings.getForceOrtho() )
-							{
-								//find a new intersection point, vertical case
-								pointIntersect = MiscMath.findPointOnLine(lineHorizCenter, adjustments[k]);
-								Point[] linePerpVert = GrayscaleImageEdit.findPerpendicularLineFast(imgSegCropped, (objIndex+1), pointIntersect, lineHorizCenter);
-								vecCurrVertLines.setElementAt(linePerpVert, k+1);
-							} 
-							
-							
-							
-							/*
-							System.err.println("Adjusted intersection point is at (" + pointIntersect.getX() + "," + pointIntersect.getY() + ")");
-							componentImageCropped.get().getGraphics().setColor( Color.BLUE );
-							componentImageCropped.get().getGraphics().fillArc( (int)(pointIntersect.getX()),
-								(int)(pointIntersect.getY()),
-								5, 5, 0, 360);
-							*/
-							
-						}
-						
-						//the perpendicular line is used to find appropriately spaced line,
-						//but we only replace both if the 'forced orthogonality' is checked
-						if (isHorizontal || settings.getForceOrtho() )
-							vecCurrHorizLines.setElementAt(lineHorizCenter, 0);
-						if (!isHorizontal || settings.getForceOrtho() )
-							vecCurrVertLines.setElementAt(lineVertCenter, 0);
-						
-						
-							
-							
-						//linePerp = null;
-						//linePerp = GrayscaleImageEdit.findLongestPerpendicularLineExhaustive( (Vector)vecSegObjBordersShort.get(objIndex), lineAngle);
-						
-						//splitPane.revalidate();
-						
-						//System.err.println("Found longest perpendicular line: " + linePerp[0] + " --> " + linePerp[1]);
-						
-						
-						//here we have to recalc. the center/50% etc lines
-						/*
-						if (absDistHoriz > absDistVert)
-						{
-							//System.err.println("Horizonal line...");
-							Vector[] v = GrayscaleImageEdit.fetchHorizVertLinesInt( lineVertCenter, line, 
-								(Vector)vecSegObjBordersShort.get(objIndex)  );
-							
-							vecCurrHorizLines = v[1];
-							
-							
-							if (settings.getForceOrtho() && linePerp != null)
-							{
-								Vector[] v2 = GrayscaleImageEdit.fetchHorizVertLinesInt( linePerp, lineHorizCenter, 
-									(Vector)vecSegObjBordersShort.get(objIndex)  );
-							
-								vecCurrVertLines = v2[0];
-							}
-							
-						} else
-						{
-							//System.err.println("Vertical line...");
-							Vector[] v = GrayscaleImageEdit.fetchHorizVertLinesInt( line, lineHorizCenter,
-								(Vector)vecSegObjBordersShort.get(objIndex)  );
-								
-							vecCurrVertLines = v[0];
-							
-							if (settings.getForceOrtho() && linePerp != null)
-							{
-								Vector[] v2 = GrayscaleImageEdit.fetchHorizVertLinesInt( lineVertCenter, linePerp, 
-									(Vector)vecSegObjBordersShort.get(objIndex)  );
+						/* Make the user line disappear */
+						componentImageCropped.setBorderFixedPoint1(null);
+						componentImageCropped.setBorderFixedPoint2(null);
 
-								vecCurrHorizLines = v2[1];
+						System.err.format("User gave us following main vein line: (%d,%d)-(%d,%d) inside object %d\n",
+								mainVeinLine[0].x, mainVeinLine[0].y, mainVeinLine[1].x, mainVeinLine[1].y, objIndex);
+
+						Vector[] vecCurrLines = (Vector[])vecPriSecLines.get(objIndex);
+						Vector vecCurrPriLines = vecCurrLines[0]; /* lines parallel to main vein */
+						Vector vecCurrSecLines = vecCurrLines[1]; /* lines parallel to width line (perpendicular to main vein) */
+						
+						/* main vein line ... */
+						vecCurrPriLines.set(0, mainVeinLine);
+						
+						/* ... and its quartiles */
+						double[] adjustments = { 0.25, 0.50, 0.75 };
+						for (int k = 0; k < adjustments.length; k++) {
+							Point2D.Double pointIntersect = MiscMath.findPointOnLine(mainVeinLine, adjustments[k]);
+							Point[] adjustmentLine = GrayscaleImageEdit.findPerpendicularLineFast(imgSegCropped, (objIndex+1), pointIntersect, mainVeinLine);
+							vecCurrSecLines.set(k+1, adjustmentLine);
+						}
+						
+						/* longest width line ... */
+						Point[] longestWidthLine = null;
+						double longestPerpedicularLength = 0;
+						/* Here we iterate over all points on the main vein line,
+						 * find for each a perpendicular, then pick the longest perpendicular.
+						 * The implementation is currently bit quirky, but fairly efficient.
+						 * What we really need here is Bresenham's line algorithm.
+						 */
+						double deltaX = mainVeinLine[0].getX() - mainVeinLine[1].getX();
+						double deltaY = mainVeinLine[0].getY() - mainVeinLine[1].getY();
+						double stepsToSweapMainVeinLine = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+						for (int i = 0; i < stepsToSweapMainVeinLine; i += 1) {
+							Point2D.Double pointOnMainVein = MiscMath.findPointOnLine(mainVeinLine, (double)i / stepsToSweapMainVeinLine);
+							Point[] perpendicular = GrayscaleImageEdit.findPerpendicularLineFast(imgSegCropped, (objIndex+1), pointOnMainVein, mainVeinLine);
+							double newLength = perpendicular[0].distance(perpendicular[1]);
+							if (longestWidthLine == null ||
+									newLength > longestPerpedicularLength) {
+								longestPerpedicularLength = newLength;
+								longestWidthLine = perpendicular;
 							}
 						}
-						*/
+						vecCurrSecLines.set(0, longestWidthLine);
 						
-				
-						//change the data permanently
-						((Vector[])vecHorizVertLines.get(objIndex))[0] = vecCurrVertLines;
-						((Vector[])vecHorizVertLines.get(objIndex))[1] = vecCurrHorizLines;
-						
-						//adjust image
-						componentImageCropped.setVectorOfLines(vecHorizVertLines);
-						
-						//System.err.println("--------");
-						
+						/* ... and its quartiles */
+						for (int k = 0; k < adjustments.length; k++) {
+							Point2D.Double pointIntersect = MiscMath.findPointOnLine(longestWidthLine, adjustments[k]);
+							Point[] adjustmentLine = GrayscaleImageEdit.findPerpendicularLineFast(imgSegCropped, (objIndex+1), pointIntersect, longestWidthLine);
+							vecCurrPriLines.set(k+1, adjustmentLine);
+						}
+												
 						updateSaveButtons(true);
-
 					}
 					
 					

@@ -6630,7 +6630,7 @@ public class GrayscaleImageEdit
 	
 	
 	/**
-	* Find a line that is (approximately) perpendicular to another line, defined by an angle.
+	* Find a line that is perpendicular to another line, defined by an angle.
 	* It does this moving from a pre-defined intersection point, with a known angle,
 	* outwards from the intersection point until no more object pixels are found.
 	* The two most extreme points form the perpendicular line. This does not assure
@@ -6644,107 +6644,50 @@ public class GrayscaleImageEdit
 	*/
 	public static Point[] findPerpendicularLineFast(int[][] imgSeg, int objId, Point2D.Double pointIntersect, Point[] templateLine)
 	{
-		Point[] pRet = new Point[2];
-		
-		// we reflect the X/Y step lengths from the template line, which should yield a perpendicular line
-		double deltaX = (templateLine[0].getY() - templateLine[1].getY() );
-		double deltaY = -(templateLine[0].getX() - templateLine[1].getX() );
-		
-		int maxY = imgSeg.length;
-		int maxX = imgSeg[0].length;
+		Point[] perpendicularLine = new Point[2];
 
-		int startX = (int)pointIntersect.getX();
-		int startY = (int)pointIntersect.getY();
+		double deltaX = templateLine[1].getX() - templateLine[0].getX();
+		double deltaY = templateLine[1].getY() - templateLine[0].getY();
 		
-		Point pStart = new Point(startX, startY);
-		Point pMatch = new Point(startX, startY);
+		/* Normalize iteration step: delta on one axis will be 1, while
+		 * delta on the other axis will be < 1. This insures that we go
+		 * through all points of the object while seeking the extremities
+		 * of the perpedicular */
+		double maxDelta = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+		System.err.format("pre-norm  perpendicular delta: %f %f\n", deltaX, deltaY);
+
+		deltaX /= maxDelta;
+		deltaY /= maxDelta;
 		
-		boolean slopeMissing = (deltaX == 0);
-		boolean slopeZero = (deltaY == 0);
-		double slope = 0.0, intercept = 0.0;
-		if (!slopeMissing && !slopeZero)
-		{
-			slope = deltaY/deltaX;
-			intercept = -slope*startX + startY;
-			//System.err.println("Rand. line with slope " + slope + " and intercept " + intercept + "...");
+		System.err.format("post-norm perpendicular delta: %f %f\n", deltaX, deltaY);
+		
+		Point2D.Double point = new Point2D.Double();
+		
+		/* Iterate through perpendicular points to the left */
+		point.x = pointIntersect.getX();
+		point.y = pointIntersect.getY();
+		while (pointIsWithinObject(imgSeg, objId, point)) {
+			point.x += deltaY;
+			point.y -= deltaX;
 		}
-		
-		int stopYfinal = imgSeg.length;
-		int stopXfinal = imgSeg[0].length;
-		
-	
-		
-		if (!slopeMissing || !slopeZero)
-		{
-			for (int i = 0; i < 2; i++)
-			{
-				//first we move one direction (up/left), then the next (down/right)
-				int step = (i == 0) ? -1 : 1;
-				Point p = new Point(startX, startY);
-				
-				if ( slopeMissing || Math.abs(deltaY) > Math.abs(deltaX) )
-				{
-					//int stopYfinal = (int)Math.max(startY, stopY);
-					int xx = startX;
-					int yy = startY;
-					while (yy < stopYfinal && yy >= 0 && xx < stopXfinal && xx >= 0)
-					{
-						if (!slopeMissing)
-							xx = (int)Math.round((yy - intercept)/slope);
-						
-						
-						if (xx < stopXfinal && xx >= 0)
-						{
-							if (imgSeg[yy][xx] == objId)
-							{
-								//g2d.setColor(Color.BLUE);
-								p = new Point(xx, yy);
-							}// else
-							//	g2d.setColor(Color.RED);
-											
-							//g2d.drawLine(xx, yy, xx, yy);
-						}
-							
-						yy += step;
-					}
-					
-				} else
-				{
-					int yy = startY;
-					int xx = startX;
-					while (xx < stopXfinal && xx >= 0 && yy < stopYfinal && yy >= 0 )
-					{
-						if (!slopeZero)
-							yy = (int)Math.round( slope*xx + intercept);
-						
-						if ( yy < stopYfinal && yy >= 0)
-						{
-							if (imgSeg[yy][xx] == objId)
-							{
-								//g2d.setColor(Color.BLUE);
-								p = new Point(xx, yy);
-							}// else
-							//	g2d.setColor(Color.RED);
-							
-							//g2d.drawLine(xx, yy, xx, yy);
-						}
-							
-						xx += step;
-					}
-				}
-				
-				//save the last point
-				pRet[i] = new Point(p);
-			
-			}
-		} else
-		{
-			//nothing we can do here...
-			return null;
+		/* Make one step back (Barbara proposed this, I don't think its too elegant :P */
+		perpendicularLine[0] = new Point(
+				(int)(point.x - deltaY),
+				(int)(point.y + deltaX));
+
+		/* Iterate through perpendicular points to the right */
+		point.x = pointIntersect.getX();
+		point.y = pointIntersect.getY();
+		while (pointIsWithinObject(imgSeg, objId, point)) {
+			point.x -= deltaY;
+			point.y += deltaX;
 		}
-		
-		
-		return pRet;
+		/* Make one step back (Barbara proposed this, I don't think its too elegant :P */
+		perpendicularLine[1] = new Point(
+				(int)(point.x + deltaY),
+				(int)(point.y - deltaX));
+				
+		return perpendicularLine;
 	}
 	
 	/**

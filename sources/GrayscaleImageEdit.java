@@ -3622,6 +3622,10 @@ public class GrayscaleImageEdit
 				//System.err.println("Horiz. coordinate at adjust " + adjustments[k] + " is " + pointIntersect );
 				Point[] linePerpHoriz;
 				linePerpHoriz = GrayscaleImageEdit.findPerpendicularLineFast(imgSeg, (i+1), pointIntersect, lineHorizOrtho);
+				/* swap end-points for base to tip consistency */
+				Point tmp = linePerpHoriz[0]; 
+				linePerpHoriz[0] = linePerpHoriz[1];
+				linePerpHoriz[1] = tmp;
 				vecCurrHorizLines.add(linePerpHoriz);
 				
 				pointIntersect = MiscMath.findPointOnLine(lineHorizCenter, adjustments[k]);
@@ -3630,6 +3634,11 @@ public class GrayscaleImageEdit
 				vecCurrVertLines.add(linePerpVert);
 			
 			}
+			
+			/* swap end-points for base to tip consistency */
+			Point tmp = lineVertCenter[0]; 
+			lineVertCenter[0] = lineVertCenter[1];
+			lineVertCenter[1] = tmp;
 				
 			//the perpendicular line is used to find appropriately spaced line,
 			//but we only replace both if the 'forced orthogonality' is checked

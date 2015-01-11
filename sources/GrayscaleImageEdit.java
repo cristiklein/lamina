@@ -6654,13 +6654,10 @@ public class GrayscaleImageEdit
 		 * through all points of the object while seeking the extremities
 		 * of the perpedicular */
 		double maxDelta = Math.max(Math.abs(deltaX), Math.abs(deltaY));
-		System.err.format("pre-norm  perpendicular delta: %f %f\n", deltaX, deltaY);
 
 		deltaX /= maxDelta;
 		deltaY /= maxDelta;
-		
-		System.err.format("post-norm perpendicular delta: %f %f\n", deltaX, deltaY);
-		
+				
 		Point2D.Double point = new Point2D.Double();
 		
 		/* Iterate through perpendicular points to the left */

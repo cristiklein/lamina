@@ -710,7 +710,22 @@ public class JComponentDisplay extends JComponent
 								
 						
 								//display a rectangle around a border point
-								graphics2d.setColor( Color.WHITE );
+								if (m == 0)
+									graphics2d.setColor( Color.RED );
+								else if (m == 1)
+									graphics2d.setColor( Color.ORANGE );
+								else if (m == 2)
+									graphics2d.setColor( Color.YELLOW );
+								else if (m == 3)
+									graphics2d.setColor( Color.GREEN );
+								else if (m == 4)
+									graphics2d.setColor( Color.CYAN );
+								else if (m == 5)
+									graphics2d.setColor( Color.BLUE );
+								else if (m == 6)
+									graphics2d.setColor( Color.MAGENTA );
+								else
+									graphics2d.setColor( Color.WHITE );
 									
 								int n = BORDER_RECT_OFFSET_TINY;
 								graphics2d.fillArc( (int)Math.round( (p.getX()-n)*scaleFactor),

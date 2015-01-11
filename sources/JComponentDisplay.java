@@ -605,11 +605,14 @@ public class JComponentDisplay extends JComponent
 						//connect the variable point with the fixed one
 						if (pointVarBorder != null && pointFixedBorder1 != null && pointFixedBorder2 == null)
 						{
+							int phyX1 = (int)Math.round(pointFixedBorder1.getX()*scaleFactor);
+							int phyY1 = (int)Math.round(pointFixedBorder1.getY()*scaleFactor);
+							int phyX2 = (int)Math.round(pointVarBorder.getX()*scaleFactor);
+							int phyY2 = (int)Math.round(pointVarBorder.getY()*scaleFactor);
+							
 							graphics2d.setColor( Color.RED );
-							graphics2d.drawLine( (int)Math.round(pointFixedBorder1.getX()*scaleFactor),
-								(int)Math.round(pointFixedBorder1.getY()*scaleFactor),
-								(int)Math.round(pointVarBorder.getX()*scaleFactor),
-								(int)Math.round(pointVarBorder.getY()*scaleFactor) );
+							graphics2d.setFont(new Font("TimesRoman", Font.PLAIN, 24)); 
+							drawLineWithAnnotation(graphics2d, phyX1, phyY1, phyX2, phyY2, "base", "tip");
 						}
 					}
 					
@@ -636,43 +639,48 @@ public class JComponentDisplay extends JComponent
 					
 					if (vecLines != null)
 					{
-						for (int n = 0; n < vecLines.size(); n++)
+						String annotations1[][] = {
+								{ "base", "B25", "B50", "B75" },
+								{ "left", "L25", "L50", "L75" },
+						};
+						String annotations2[][] = {
+								{ "tip"  , "T25", "T50", "T75" },
+								{ "right", "R25", "R50", "R75" },
+						};
+
+						/* iterate over objects */
+						for (int objId = 0; objId < vecLines.size(); objId++)
 						{
-							//contains horizontal/vertical lines
-							Vector[] currVec = (Vector[])vecLines.get(n);
-							for (int k = 0; k < currVec.length; k++)
+							Vector[] currVec = (Vector[])vecLines.get(objId);
+							/* iterate over axis (parallel to main vein line, perpendicular) */
+							for (int axisId = 0; axisId < currVec.length; axisId++)
 							{
-								graphics2d.setColor( Color.CYAN );
-								for (int m = (currVec[k].size()-1); m >= 0; m--)
+								for (int lineId = 0; lineId < currVec[axisId].size(); lineId++)
 								{
-									Point[] pArr = (Point[])currVec[k].get(m);
-									
-									try
+									Point[] pArr = (Point[])currVec[axisId].get(lineId);
+
+									graphics2d.setColor( Color.CYAN );
+									if (lineId == 0)
 									{
-										graphics2d.drawLine( (int)Math.round(pArr[0].getX()*scaleFactor),
-											(int)Math.round(pArr[0].getY()*scaleFactor),
-											(int)Math.round(pArr[1].getX()*scaleFactor),
-											(int)Math.round(pArr[1].getY()*scaleFactor) );
-									} catch (Exception ex)
-									{
-										//ignore for now
-									}
-										
-									if (m == 1)
-									{
-										if (k == 0)
-											graphics2d.setColor( Color.BLACK );
+										if (axisId == 0)
+											graphics2d.setColor( Color.RED );
 										else
 											graphics2d.setColor( Color.MAGENTA );
 									}
-									if (m == 2)
+									
+									try
 									{
-										if (k == 0)
-											graphics2d.setColor( Color.ORANGE );
-										else
-											graphics2d.setColor( Color.WHITE );
-									}
-
+										graphics2d.setFont( new Font("Times New Roman", Font.PLAIN, 14) );
+										drawLineWithAnnotation(graphics2d,
+											(int)Math.round(pArr[0].getX()*scaleFactor),
+											(int)Math.round(pArr[0].getY()*scaleFactor),
+											(int)Math.round(pArr[1].getX()*scaleFactor),
+											(int)Math.round(pArr[1].getY()*scaleFactor),
+											annotations1[axisId][lineId], annotations2[axisId][lineId]);
+									} catch (Exception ex)
+									{
+										//ignore for now
+									}	
 								}
 							}
 							
@@ -977,6 +985,34 @@ public class JComponentDisplay extends JComponent
 	
 	}
 	
+	private void drawLineWithAnnotation(Graphics2D graphics2d, int phyX1,
+			int phyY1, int phyX2, int phyY2, String string1, String string2) {
+
+		/* Draw line */
+		graphics2d.drawLine(phyX1, phyY1, phyX2, phyY2);
+
+		/* Some computations needed to move text outside line */
+		double deltaX = phyX2 - phyX1;
+		double deltaY = phyY2 - phyY1;
+		double normalizationFactor = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+		deltaX /= normalizationFactor;
+		deltaY /= normalizationFactor;
+
+		/* Make sure text is not on line */
+		FontMetrics fm = graphics2d.getFontMetrics(graphics2d.getFont());
+		int textWidth1 = fm.stringWidth(string1);
+		int textWidth2 = fm.stringWidth(string2);
+		int textHeight = fm.getMaxAscent();
+		
+		/* Finally draw */
+		graphics2d.drawString(string1,
+				(int)(phyX1 - deltaX * textWidth1 - textWidth1 / 2),
+				(int)(phyY1 - deltaY * textWidth1 + textHeight / 2));
+		graphics2d.drawString(string2,
+				(int)(phyX2 + deltaX * textWidth2 - textWidth2 / 2),
+				(int)(phyY2 + deltaY * textWidth2 + textHeight / 2));
+	}
+
 	/**
 	* Un-assignes lines etc. that are otherwise drawn on top of the image
 	* 

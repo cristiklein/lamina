@@ -617,10 +617,10 @@ public class MiscMath
 	{
 		Point2D.Double pRet = new Point2D.Double();
 		
-		int lineDeltaX = (int)(line[1].getX() - line[0].getX());
-		int lineDeltaY = (int)(line[1].getY() - line[0].getY());
-		int origX = (int)line[0].getX();
-		int origY = (int)line[0].getY();
+		double lineDeltaX = line[1].getX() - line[0].getX();
+		double lineDeltaY = line[1].getY() - line[0].getY();
+		double origX = line[0].getX();
+		double origY = line[0].getY();
 		
 		return pRet = new Point2D.Double(origX + lineDeltaX * relDist,  origY + lineDeltaY * relDist);
 	}

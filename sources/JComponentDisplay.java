@@ -994,9 +994,6 @@ public class JComponentDisplay extends JComponent
 		/* Some computations needed to move text outside line */
 		double deltaX = phyX2 - phyX1;
 		double deltaY = phyY2 - phyY1;
-		double normalizationFactor = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-		deltaX /= normalizationFactor;
-		deltaY /= normalizationFactor;
 
 		/* Make sure text is not on line */
 		FontMetrics fm = graphics2d.getFontMetrics(graphics2d.getFont());
@@ -1004,13 +1001,31 @@ public class JComponentDisplay extends JComponent
 		int textWidth2 = fm.stringWidth(string2);
 		int textHeight = fm.getMaxAscent();
 		
+		if (Math.abs(deltaX) < Math.abs(deltaY)) {
+			if (deltaY > 0) {
+				phyY1 -= textHeight;
+				phyY2 += textHeight;
+			} else {
+				phyY1 += textHeight;
+				phyY2 -= textHeight;
+			}
+		} else {
+			if (deltaX > 0) {
+				phyX1 -= textWidth1;
+				phyX2 += textWidth2;
+			} else {
+				phyX1 += textWidth1;
+				phyX2 -= textWidth2;
+			}
+		}
+		
 		/* Finally draw */
 		graphics2d.drawString(string1,
-				(int)(phyX1 - deltaX * textWidth1 - textWidth1 / 2),
-				(int)(phyY1 - deltaY * textWidth1 + textHeight / 2));
+				(int)(phyX1 - textWidth1 / 2),
+				(int)(phyY1 + textHeight / 2));
 		graphics2d.drawString(string2,
-				(int)(phyX2 + deltaX * textWidth2 - textWidth2 / 2),
-				(int)(phyY2 + deltaY * textWidth2 + textHeight / 2));
+				(int)(phyX2 - textWidth2 / 2),
+				(int)(phyY2 + textHeight / 2));
 	}
 
 	/**
